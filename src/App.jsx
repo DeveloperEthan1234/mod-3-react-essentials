@@ -5,7 +5,19 @@ import TabButton from "./components/TabButton.jsx";
 import { CORE_CONCEPTS, EXAMPLES } from "./data.js";
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState();
+
+  let tabContent = "Please select a tab";
+
+  if (selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>{EXAMPLES[selectedTopic].code}</pre>
+      </div>
+    );
+  }
 
   function handleSelect(selectedButton) {
     setSelectedTopic(selectedButton);
@@ -53,14 +65,7 @@ function App() {
                   State
                 </TabButton>
               </menu>
-              {!selectedTopic ? <p>Please select a topic</p> : null}
-              {selectedTopic ? (
-                <div id="tab-content">
-                  <h3>{EXAMPLES[selectedTopic].title}</h3>
-                  <p>{EXAMPLES[selectedTopic].description}</p>
-                  <pre>{EXAMPLES[selectedTopic].code}</pre>
-                </div>
-              ) : null}
+              {tabContent}
             </h2>
           </section>
         </main>
